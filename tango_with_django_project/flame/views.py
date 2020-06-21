@@ -10,6 +10,8 @@ def index(request):
 def about(request):
     return HttpResponse("This is About Page")
 
-def deals(request, question_id):
-    return HttpResponse("you are looking on deals %s." % question_id)
+def deal(request, deal_id):
+    return HttpResponse("you are looking on deals %s." % deal_id)
 
+def details(request, deal_id):
+    return HttpResponse("you are looking on Deal Number: %s " % deal_id)

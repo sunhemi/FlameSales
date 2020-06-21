@@ -17,6 +17,6 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('flame/', include('flame.urls')),
+    path('', include('flame.urls')),
     path('admin/', admin.site.urls)
 ]
