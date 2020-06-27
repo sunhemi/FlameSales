@@ -19,19 +19,12 @@ class Tag(models.Model):
         return self.name
 
 # pick from Hot Deals / Huo-Only Deals / Normal Deals 
-'''
-feature_option = (
-    'Hot Deals',
-    'Huo Only Deals',
-    'Normal Deals'
-)
-'''
 
-class Feature(models.Model):
-    name = models.CharField(max_length = 12) 
-    # option = feature_option[2]
-    def __str__(self):
-        return self.name
+# class Feature(models.Model):
+#    name = models.CharField(max_length = 12) 
+#    # option = feature_option[2]
+#    def __str__(self):
+#        return self.name
 
 class Store(models.Model):
     #store information 
@@ -50,8 +43,15 @@ class Store(models.Model):
 
 class Deal(models.Model):
     STATUS = (
-    (0, "Draft"),
-    (1,"Publish")
+    ('draft', "Draft"),
+    ('publish',"Publish")
+    )
+
+    FEATURE = (
+    ('HotDeals', 'Hot Deals'),
+    ('HuoOnly', 'Huozhezi Only'),
+    ('Trending', 'Trending Deals'),
+    ('GoodDeals','Good Deals'),
     )
 
     # Basic Properties 
@@ -64,8 +64,10 @@ class Deal(models.Model):
     created_time = models.DateTimeField(auto_now_add=True)
     updated_time = models.DateTimeField(auto_now=True)
     publish_time = models.DateTimeField(default=timezone.now)
-    is_draft = models.CharField(max_length=1, choices=STATUS, default=0)
-    #feature = models.ForeignKey(Feature, on_delete= models.CASCADE, related_name='feature')
+    not_delated = models.BooleanField(default = True)
+    is_draft = models.CharField(max_length=10, choices=STATUS, default='publish')
+    feature = models.CharField(max_length=10,choices = FEATURE, default='GoodDeals')    
+
     
     # Customized Properties 
     effective_date = models.DateField()
@@ -81,6 +83,9 @@ class Deal(models.Model):
         #url info: if there is a link: putlink 
         # o/w put deal itself default link
     url = models.URLField(blank=True)
+
+    # views = models.IntegerField(max_length = 2)
+    # likes = models.IntergerField(max_length = 2)
 
     class Meta:
         ordering = ('-publish_time',)

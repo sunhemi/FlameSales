@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 
+
 <head>
+
+    {% include "header.html" %}
     <title>FlamingSales</title>
 </head>
 
@@ -15,9 +18,28 @@
         <a href="/flame/about/">About</a><br />
     </div>
     <div>
+        <a href="/">HomePage</a>
+        {% if latest_deal_list %}
+            <ul>
+                {% for deal in latest_deal_list %}
+                <li>
+                    <a href="/{{ deal.id }}/"> {{ deal.title }}</a>
+                    <p>{{ deal.content }}</p>
+                    <a href="/store/{{ deal.store.id }}/">{{ deal.store }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No Deals are available.</p>
+        {% endif %}
+    </div>
+
+    <div>
         {% load static %}
-        <img src="{%static "flame/huozhezi_icon.png" %}" alt="My Logo">
+        <img src="{% static "flame/huozhezi_icon.png" %}" alt="My Logo">
     </div>
 </body>
+
+{% include "footer.html" %}
 
 </html>
