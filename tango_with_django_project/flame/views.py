@@ -31,3 +31,9 @@ def store(request, store_id):
     store = get_object_or_404(Store, pk=store_id)
     template = 'store.html'
     return render(request, template, {'store': store})
+
+
+### Test 
+def testview(request):
+    test_template = 'header.html'
+    return render(request, test_template)

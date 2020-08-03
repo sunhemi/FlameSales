@@ -1,12 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+import datetime as dt
 
 # Create your models here.
 
 # Category Model
-
-
 class Category(models.Model):
     name = models.CharField(max_length=50)
 
@@ -17,23 +16,19 @@ class Category(models.Model):
         return self.name
 
 # Tag Model
-
-
 class Tag(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
 
-# pick from Hot Deals / Huo-Only Deals / Normal Deals
 
-# class Feature(models.Model):
-#    name = models.CharField(max_length = 12)
-#    # option = feature_option[2]
-#    def __str__(self):
-#        return self.name
+# def get_image_filename(instance, filename):
+#     title = instance.post.title
+#     slug = slugify(title)
+#     return "post_images/%s-%s" % (slug, filename)  
 
-
+# Create a Store 
 class Store(models.Model):
     # store information
     name = models.CharField(max_length=50)
@@ -46,9 +41,17 @@ class Store(models.Model):
     def __str__(self):
         return self.name
 
-# Add a post status
+class StoreImage(models.Model):
+    store = models.ForeignKey(Store,on_delete = models.CASCADE ,related_name='storeimages')
+    image = models.ImageField()
 
 
+# # Multiply Image 
+# class DealImage(models.Model):
+#     deal = models.ForeignKey(Deal,default=None)
+#     image = models.ImageField(upload_to = get_image_filename, verbose_name='Deal Image')
+
+# Create a deal 
 class Deal(models.Model):
     STATUS = (
         ('draft', "Draft"),
@@ -58,14 +61,14 @@ class Deal(models.Model):
     FEATURE = (
         ('HotDeals', 'Hot Deals'),
         ('HuoOnly', 'Huozhezi Only'),
-        ('Trending', 'Trending Deals'),
+        #('Trending', 'Trending Deals'),
         ('GoodDeals', 'Good Deals'),
     )
 
     # Basic Properties
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200)
-
+    tag = models.ManyToManyField(Tag)
     content = models.TextField(max_length=200)
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='blog_posts')
@@ -81,6 +84,7 @@ class Deal(models.Model):
     # Customized Properties
     effective_date = models.DateField()
     expire_date = models.DateField()
+    
     is_active = models.BooleanField(default=True)
 
     old_price = models.DecimalField(
