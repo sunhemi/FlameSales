@@ -29,6 +29,7 @@ def details(request, deal_id):
 
 def store(request, store_id):
     store = get_object_or_404(Store, pk=store_id)
+    store.views += 1
     template = 'store.html'
     return render(request, template, {'store': store})
 

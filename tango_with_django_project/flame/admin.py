@@ -50,7 +50,7 @@ class DealAdmin(admin.ModelAdmin):
 # class StoreAdmin(admin.ModelAdmin):
 #     inlines = [StoreImageInline, ]
 
-admin.site.register([Category,Tag,])
+admin.site.register([Category,Tag,Store])
 # Store,StoreImageInline
 
 

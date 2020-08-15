@@ -8,6 +8,7 @@ import datetime as dt
 # Category Model
 class Category(models.Model):
     name = models.CharField(max_length=50)
+    views = models.IntegerField(default=0)
 
     class Meta:
         verbose_name_plural = "Categories"
@@ -15,13 +16,13 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+
 # Tag Model
 class Tag(models.Model):
     name = models.CharField(max_length=50)
-
+    views = models.IntegerField(default=0)
     def __str__(self):
         return self.name
-
 
 # def get_image_filename(instance, filename):
 #     title = instance.post.title
@@ -32,6 +33,7 @@ class Tag(models.Model):
 class Store(models.Model):
     # store information
     name = models.CharField(max_length=50)
+    views = models.IntegerField(default=0)
     address = models.CharField(max_length=100, blank=True)
     websites = models.URLField(blank=True)
     # phone number field - may change to a better one
@@ -46,10 +48,8 @@ class StoreImage(models.Model):
     image = models.ImageField()
 
 
-# # Multiply Image 
-# class DealImage(models.Model):
-#     deal = models.ForeignKey(Deal,default=None)
-#     image = models.ImageField(upload_to = get_image_filename, verbose_name='Deal Image')
+
+
 
 # Create a deal 
 class Deal(models.Model):
@@ -99,8 +99,8 @@ class Deal(models.Model):
     # url info: if there is a link: putlink
     # o/w put deal itself default link
     url = models.URLField(blank=True)
-    # views = models.IntegerField(max_length = 2)
-    # likes = models.IntergerField(max_length = 2)
+    views = models.IntegerField(default=0)
+    # likes = models.IntegerField(default=0)
 
     class Meta:
         ordering = ('-publish_time',)
